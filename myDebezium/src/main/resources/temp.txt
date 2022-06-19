@@ -1,0 +1,85 @@
+
+
+//    private void kTableTokStreamJoinExample2() throws Exception {
+//        log.info("Starting the streaming application with APP_ID as [{}]", APP_ID);
+//        log.info("Entering method {run()}, with USER_TOPIC val as {{}}, USER_ADDRESS_TOPIC val as {{}}", USER_TOPIC, USER_ADDRESS_TOPIC);
+//        final StreamsBuilder streamsBuilder = new StreamsBuilder();
+//        final KStream<Integer, User> sUser = this.getUserAsStream(streamsBuilder);
+//        final KStream<Integer, Address> ksAddress = this.getAddressAsStream(streamsBuilder);
+//        final KGroupedStream<Integer, User> sGroupedUser = sUser.groupByKey(Grouped.with(Serdes.Integer(), getSerde(new User())));
+//
+//        final TimeWindowedKStream<Integer, User> sUserTimeWindowed = sGroupedUser.windowedBy(TimeWindows.of(Duration.ofSeconds(2)).grace(Duration.ofSeconds(1)));
+//
+//
+//        final Materialized<Integer, User, WindowStore<Bytes, byte[]>> materializedTimed =
+//                Materialized.<Integer, User, WindowStore<Bytes, byte[]>>as("aggregate-store-timed-user").withValueSerde(getSerde(new User()));
+//
+//        final KTable<Windowed<Integer>, User> ktUserWindowed = sUserTimeWindowed.aggregate(() -> new User(), (k, v, a) -> {
+//            return v;
+//        }, materializedTimed)
+//                .suppress(Suppressed.untilWindowCloses(Suppressed.BufferConfig.unbounded()));
+//
+//        this.printStreamWindowed(ktUserWindowed.toStream());
+//
+//
+//        final KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), loadProperties());
+//        streams.start();
+//        log.info("Going to sleep!!!!");
+//        Thread.sleep(5 * 60 * 1000);
+//        log.info("Exiting method CountStreamExample#run()......");
+//        streams.close();
+//    }
+//
+//
+//    private void kTableTokStreamJoinExample3() throws Exception {
+//        log.info("kTableTokStreamJoinExample3(): Starting the streaming application with APP_ID as [{}]", APP_ID);
+//        log.info("kTableTokStreamJoinExample3(): Entering method {run()}, with USER_TOPIC val as {{}}, USER_ADDRESS_TOPIC val as {{}}", USER_TOPIC, USER_ADDRESS_TOPIC);
+//        final StreamsBuilder streamsBuilder = new StreamsBuilder();
+//        final KStream<Integer, User> sUser = this.getUserAsStream(streamsBuilder);
+//        final KGroupedStream<Integer, User> sGroupedUser = sUser.groupByKey(Grouped.with(Serdes.Integer(), getSerde(new User())));
+//
+//        final Materialized<Integer, User, KeyValueStore<Bytes, byte[]>> materialized =
+//                Materialized.<Integer, User, KeyValueStore<Bytes, byte[]>>as("aggregate-store-2").withValueSerde(getSerde(new User()));
+//
+//        final KTable<Integer, User> ktUser = sGroupedUser.aggregate(() -> new User(), (k, v, a) -> {
+//                    return v;
+//                }, materialized);
+//
+//        this.printStream(ktUser.toStream());
+//
+//        final KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), loadProperties());
+//        streams.start();
+//        log.info("Going to sleep!!!!");
+//        Thread.sleep(5 * 60 * 1000);
+//        log.info("Exiting method CountStreamExample#run()......");
+//        streams.close();
+//    }
+
+//    private void kTableTokStreamJoinExample() throws Exception {
+//        log.info("Starting the streaming application with APP_ID as [{}]", APP_ID);
+//        log.info("Entering method {run()}, with USER_TOPIC val as {{}}, USER_ADDRESS_TOPIC val as {{}}", USER_TOPIC, USER_ADDRESS_TOPIC);
+//        final StreamsBuilder streamsBuilder = new StreamsBuilder();
+//        final KStream<Integer, User> sUser = this.getUserAsStream(streamsBuilder);
+//        final KStream<Integer, Address> ksAddress = this.getAddressAsStream(streamsBuilder);
+//
+//        final KGroupedStream<Integer, User> sGroupedUser = sUser.groupByKey(Grouped.with(Serdes.Integer(), getSerde(new User())));
+//
+//        final KTable<Integer, User> ktUser = sGroupedUser.aggregate(() -> new User(), (k, v, a) -> {
+//            return v;
+//        }, Materialized.<Integer, User, KeyValueStore<Bytes, byte[]>>as("aggregate-store-2").withValueSerde(getSerde(new User())));
+//
+//
+//        final KStream<Integer, UserAddressJoin> ksUserAddressJoin = ksAddress.join(ktUser, (address, user) -> {
+//            return UserAddressJoin.getInstance(user, address);
+//        }, Joined.<Integer, Address, User>with(Serdes.Integer(), getSerde(new Address()), getSerde(new User())));
+//
+//        printStream(ksUserAddressJoin);
+//
+//
+//        final KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), loadProperties());
+//        streams.start();
+//        log.info("Going to sleep!!!!");
+//        Thread.sleep(5 * 60 * 1000);
+//        log.info("Exiting method CountStreamExample#run()......");
+//        streams.close();
+//    }

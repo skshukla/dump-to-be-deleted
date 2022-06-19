@@ -1,0 +1,38 @@
+server:
+  port: 9090
+
+topics:
+  user: "my-topics-06-partitioned.public.user_tbl"
+  user-address: "my-topics-06-partitioned.public.user_address_tbl"
+  summarized:
+    user: "summarized-user-info-022"
+    address: "summarized-address-info-022"
+    user-address-join: "summarized-user-address-join-022"
+
+settings:
+  enable.increment.app.id: "true"
+
+streaming:
+  application.id: "my-app-00-017"
+  application.server: "localhost:8789"
+  bootstrap.servers: "kube0:30092"
+  num.stream.threads: "1"
+  default.key.serde: "org.apache.kafka.common.serialization.Serdes$StringSerde"
+  default.value.serde: "org.apache.kafka.common.serialization.Serdes$StringSerde"
+  cache.max.bytes.buffering: "10485760"
+  commit.interval.ms: 10000
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+      temp:
+        use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  datasource:
+    driverClassName: org.postgresql.Driver
+    platform: postgres
+    url: jdbc:postgresql://kube0:30000/mydb
+    username: sachin
+    password: 123456
+    initialization-mode: always

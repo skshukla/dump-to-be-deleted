@@ -1,0 +1,30 @@
+server:
+  port: 8787
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://sachin:123456@kube0:30017/admin
+      database: mydb
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+        enable_lazy_load_no_trans: true
+    hibernate:
+      ddl-auto: none
+      temp:
+        use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  datasource:
+    driverClassName: org.postgresql.Driver
+    platform: postgres
+    url: jdbc:postgresql://kube0:30000/mydb
+    username: sachin
+    password: 123456
+    initialization-mode: always
+
+topics:
+  user_address_topics: "my-topics-07-partitioned.public.user_tbl,my-topics-07-partitioned.public.user_address_tbl"
